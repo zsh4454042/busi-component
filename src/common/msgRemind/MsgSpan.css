@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+/*
+* 闪烁效果
+*/
+@keyframes yunWeiBlink{
+  0% { opacity: 1; }
+  50% { opacity: 1; }
+  50.01% { opacity: 0; }
+  100% { opacity: 0; }
+}
+.yunWeiBlink{
+	font-weight:bold;
+	cursor:pointer;
+    color: #FF8B00;
+    animation: blink 1s linear infinite;  
+}
+	

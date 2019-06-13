@@ -1,0 +1,13 @@
+.bui-queue-item-del{
+	color: blue;
+	padding: 3px 0px;
+	display: inline-block;
+}
+.bui-queue .bui-queue-item{
+	border:none;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.bui-queue .bui-queue-item:nth-child(even){
+	background-color: #f0f0f0;
+}
