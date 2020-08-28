@@ -147,6 +147,23 @@ var PageSizeBar = Toolbar.Bar.extend([Component.UIBase.Bindable],
                 store = _self.get('store');
             _self._afterStoreLoad(store, params);
         },
+        reload : function(param){
+        	var _self = this, store = _self.get('store');
+        	_self._jumpToFirstPage(store,param);
+        },
+        _jumpToFirstPage : function(store, param){
+            var _self = this,
+                pageSize = _self.get('pageSize'),
+                index = 0,
+                start = index * pageSize;
+            param.start = start;
+            param.limit = pageSize;
+            param.pageIndex = index;
+            var result = _self.fire('beforepagechange', {from:_self.get('curPage'), to:1});
+            if (store && result !== false) {
+                store.load(param);
+            }
+        } ,
         //get the items of paging bar
         _getItems:function () {
             var _self = this,
@@ -199,7 +216,8 @@ var PageSizeBar = Toolbar.Bar.extend([Component.UIBase.Bindable],
         		selectContent = '<select id="pageSizeSelect"'+ 
         		' style="height:18px;margin:0;width:53px;vertical-align:baseline;*vertical-align:middle;padding:0 2px;">'+
         		_self._getSelectOptionsEl(store.get('pageSize'))+
-        		'<option value="-1">全部</option>'+
+        		// TODO 数据量过大，导致页面崩溃
+//        		'<option value="-1">全部</option>'+
         		'</select>';
         	}
         	return {
