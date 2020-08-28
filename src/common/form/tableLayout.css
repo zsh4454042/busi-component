@@ -21,6 +21,7 @@
  	background-color: #EFF3FF;
  	text-align: center;
  	width: 83px;
+	white-space: nowrap;
 }
 
  .tableLayout tr td {
