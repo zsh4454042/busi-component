@@ -8,7 +8,9 @@ define('common/uploader/ViewUploader', ['bui/uploader'], function(r) {
 			var _self = this,items = _self.get('alreadyItems');
 			if(items && Array.isArray(items)){
 				items.map(function(item){
-					var name = item.name.replace("#","%23");
+					var name = item.name.replace("#","%23").replace("[","%5B").replace("]","%5D")
+					.replace("&","%26").replace("=","%3D").replace("?","%3F")
+					.replace("/","%2F").replace("+","%2B").replace(" ","%20");
 					var path = item.path;
 					item.filePath = path;
 					item.path = "/std/atachFile/download?name=" + name + "&path=" + path;// 下载路径
@@ -57,8 +59,8 @@ define('common/uploader/ViewUploader', ['bui/uploader'], function(r) {
 						return true;
 					case 'jpg':
 						return true;
-					case 'tif':
-						return true;
+//					case 'tif':
+//						return true;
 					case 'dwg':
 						return true;
 					default : 
@@ -77,7 +79,7 @@ define('common/uploader/ViewUploader', ['bui/uploader'], function(r) {
 				value: {
 					'success': '<div class="success"><label id="{id}" class="fileLabel" title={title}>{name}</label><span style="float: right;"><a href="{path}">下载</a></span></div>',
 					'successPreview': '<div class="success"><label id="{id}" class="fileLabel" title={title}>{name}</label><span style="float: right;"><a href="{path}">下载</a>&nbsp;'+
-						'</span></div>',	
+						'<a href="{previewUrl}{filePath}" target="_blank">预览</a></span></div>',	
 				}
 			}
 		}
