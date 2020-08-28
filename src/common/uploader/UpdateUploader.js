@@ -35,34 +35,34 @@ define('common/uploader/UpdateUploader', ['bui/uploader', 'bui/progressbar'], fu
             _self.on('change', function (e) {
                 var itemArr = e.items, fileSliceSize = 2097152;
                 for (var i in itemArr) {
-                    if (itemArr[i].size > fileSliceSize) {//文件大于2M时进行拆分上传
-                        var item = itemArr[i];
-                        queue.updateFileStatus(item, 'progress');
-                        var file = item.file, blobArr = [];//获取文件的FILE对象
-                        //1.安装2M大小对文件进行切片
-                        var sliceNum = Math.ceil(file.size / fileSliceSize);
-                        for (var j = 0; j < sliceNum; j++) {
-                            var start = j * fileSliceSize,
-                                end = (start + fileSliceSize) >= file.size ? file.size+1 : (start + fileSliceSize);
-                            blobArr.push(file.slice(start, end, file.type));
-                        }
-                        //2.发送文件大小和文件名称给服务器端，确定从第几个分片开始上传
-                        $.ajax({
-                           url:'/zuul/std/atachFile/checkFile' ,
-                            data:{name: item.name, size: item.size},
-                            async:false,
-                            type:'POST',
-                            success:function (result) {
-                                if (result) {
-                                    _self._uploadBlob(result, blobArr, item);
-                                } else {
-                                    _self._uploadBlob(0, blobArr, item);
-                                }
-                            }
-                        });
-                    } else {//小于2M的文件通过BUI原有机制上传
+//                    if (itemArr[i].size > fileSliceSize) {//文件大于2M时进行拆分上传
+//                        var item = itemArr[i];
+//                        queue.updateFileStatus(item, 'progress');
+//                        var file = item.file, blobArr = [];//获取文件的FILE对象
+//                        //1.安装2M大小对文件进行切片
+//                        var sliceNum = Math.ceil(file.size / fileSliceSize);
+//                        for (var j = 0; j < sliceNum; j++) {
+//                            var start = j * fileSliceSize,
+//                                end = (start + fileSliceSize) >= file.size ? file.size+1 : (start + fileSliceSize);
+//                            blobArr.push(file.slice(start, end, file.type));
+//                        }
+//                        //2.发送文件大小和文件名称给服务器端，确定从第几个分片开始上传
+//                        $.ajax({
+//                           url:'/zuul/std/atachFile/checkFile' ,
+//                            data:{name: item.name, size: item.size},
+//                            async:false,
+//                            type:'POST',
+//                            success:function (result) {
+//                                if (result) {
+//                                    _self._uploadBlob(result, blobArr, item);
+//                                } else {
+//                                    _self._uploadBlob(0, blobArr, item);
+//                                }
+//                            }
+//                        });
+//                    } else {//小于2M的文件通过BUI原有机制上传
                         _self.upload();
-                    }
+//                    }
                 }
             })
         },
@@ -114,7 +114,7 @@ define('common/uploader/UpdateUploader', ['bui/uploader', 'bui/progressbar'], fu
             rules: {
                 value: {
                     //文的类型
-                    ext: ['.doc,.docx,.xls,.xlsx,.vsd,.pdf,.jpg,.tif,.dwg', '文件类型只能为{0}'],
+                    ext: ['.doc,.docx,.xls,.xlsx,.vsd,.pdf,.jpg,.png', '文件类型只能为{0}'],//update zhengwm 不兼容.tif格式的文件
                     //文件大小的最大值,单位也是kb
                     maxSize: [1024 * 250, '文件大小不能大于250M']
                 }
