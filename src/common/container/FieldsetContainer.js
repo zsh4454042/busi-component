@@ -42,14 +42,7 @@ define('common/container/FieldsetContainer',['bui/common'],function(r){
 					_self.set('height',0);
 					legend.set('content',title + COLLAPSE_ARROW )
 				}else{//展开
-//					_self.set('height',_self.get('legendHeight'));
-					/**
-					 * 修改人 	liwt
-					 * 修改时间	2018年8月27日	  10:44
-					 * 修改原因	动态添加子控件时，此容器边框无法自动改变
-					 * 修改代码：  _self.set('height','auto');
-					 */
-					_self.set('height','auto');
+					_self.set('height',_self.get('legendHeight'));
 					_self._disableChildren(true);
 					legend.set('content',title + EXPAND_ARROW )
 				}
