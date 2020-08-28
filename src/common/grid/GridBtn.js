@@ -31,6 +31,7 @@ define('common/grid/GridBtn', [
 			bbarContainer.css('display','block');
 			var bar = new PageSizeBar({store : _self.get('store'),render : bbarContainer,parent : _self});
 			bar.render();
+			_self.set('pbar', bar);
 		},
 		_renderTbar : function(){
 			var _self = this,tbarItems = _self.get('tbarItems'),tbarContainer = _self.get('el').find('.bui-grid-tbar');
