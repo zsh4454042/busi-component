@@ -14,7 +14,7 @@ define('common/grid/SearchGridContainer', ['bui/common',
 			var _self = this;
 			var searchForm = _self._initSearchForm();
 			var searchGrid = _self._initSearchGrid();
-			var up = new FieldSet({id : 'searchFormFieldSet',title : '查询',items:[searchForm],collapse : true});
+			var up = new FieldSet({id : 'searchFormFieldSet',title : '查询',items:[searchForm],collapse : _self.get('collapse')});
 			var down = new FieldSet({id : 'searchGridFieldSet',title : '列表',items:[searchGrid]});
 			_self.addChild(up);
 			_self.addChild(down);
@@ -27,9 +27,16 @@ define('common/grid/SearchGridContainer', ['bui/common',
 			var _self = this,store = _self.get('store'),up = _self.getChild('searchFormFieldSet');
 			//点击上方查询按钮刷新列表
 			var searchForm = _self.getChild(SEARCH_FORM_ID, true);
+			var gridBtn = _self.get('gridBtn');
+			pbar = gridBtn.get('pbar');
 			searchForm.on('formSearch',function(e){
 				var param = e.param;
+				//解决分页问题
+				param["start"] = 0;
+				param["pageIndex"] = 0;
 				store.load(param);
+				//采用此方法当一个模块使用两个本组件时会出现查询错误的问题（永远都只调用最后生成的SearchGridContainer的store的查询方法）
+//				pbar.reload(param);
 			});
 			$(window).on('resize',function(){_self._calGridSize();});
 			up.on('toggleEvent',function(){_self._calGridSize();});
@@ -63,6 +70,7 @@ define('common/grid/SearchGridContainer', ['bui/common',
             	loadMask: true
             });
             var gridBtn = new GridBtn(searchGridCfg);
+            _self.set('gridBtn', gridBtn);
             return gridBtn;
 		}
 	}, {
@@ -71,6 +79,7 @@ define('common/grid/SearchGridContainer', ['bui/common',
 			columns : {value : []},
 			store : {},
 			searchGrid : {},
+			collapse:{value:true}//是否可以收缩表单内容
 		},
 		SEARCH_FORM_ID : SEARCH_FORM_ID,
 		SEARCH_GRID_ID : SEARCH_GRID_ID,
