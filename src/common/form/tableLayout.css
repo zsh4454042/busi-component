@@ -21,11 +21,11 @@
  	background-color: #EFF3FF;
  	text-align: center;
  	width: 83px;
-	white-space: nowrap;
+ 	white-space:nowrap;
 }
 
  .tableLayout tr td {
-	min-width: 117px;
+	min-width: 207px;
 }
 
 .tableLayout  tr th s {
@@ -58,6 +58,8 @@
 }
 
 .tableLayout tr td textarea {
+	/* 解决表单textarea行距太小 */
+	line-height: 20px;
 	min-height: 60px;
 	/* 不允许用户调整元素的尺寸*/
 	resize: none;
