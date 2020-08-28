@@ -43,20 +43,19 @@ define('common/form/FormContainer',['bui/common', 'bui/form', 'bui/tooltip', 'co
 	Tooltip = require('bui/tooltip'),
 	TableLayout = require('common/form/TableLayout');
 	
-	var ATTR_ID = 'formContainer';
-	
 	var FormContainer = Controller.extend({
 		
 		initializer : function() {
 			var _self = this;
 			_self.set('elTagName', 'form');
 			_self.set('elAttrs', {id : _self.get('attr_id')});
+			_self.set('elAttrs', {id : _self.get('id')});
 			_self.addChild(_self._initTableLayout());
 		},
 		renderUI : function() {
 			var _self = this;
 			_self._initHForm();
-			_self._initValidTooltip();
+			if(_self.get('isValid')) _self._initValidTooltip();
 		},
 		_initTableLayout : function() {
 			var _self = this;
@@ -71,6 +70,7 @@ define('common/form/FormContainer',['bui/common', 'bui/form', 'bui/tooltip', 'co
 			var _self = this;
 			var form = new HForm({
 				srcNode : '#' + _self.get('attr_id'),
+				srcNode : '#' + _self.get('id'),
 				errorTpl : '<span class="x-icon x-icon-small x-icon-error" data-title="{error}">!</span>'
 			}).render();
 			_self.set('common-formcontainer',form);
@@ -106,7 +106,10 @@ define('common/form/FormContainer',['bui/common', 'bui/form', 'bui/tooltip', 'co
 		ATTRS : {
 			colNum : {value : 1},
 			formChildrens : {},
-			attr_id:{value:'formContainer'}
+			attr_id:{value:'formContainer'},//form表单的id，避免一个页面存在多个表单时，只能序列化第一个表单
+			isValid:{value:true},//是否需要表单验证
+			formChildrens : {},
+			id : {value : 'formContainer'}
 		}
 	});
 	return FormContainer;
