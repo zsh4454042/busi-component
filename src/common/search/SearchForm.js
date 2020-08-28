@@ -39,9 +39,18 @@ define('common/search/SearchForm',['bui/common','bui/layout','bui/form','common/
 					});
 				}
 			})
-			_self.get('el').delegate('.button-primary','click',function(ev){
+			_self.get('el').delegate('.searchBtn','click',function(ev){
 				ev.preventDefault();
 				_self.fire('formSearch',{
+					param : _self.serializeToObject(),
+					domTarget: ev.domTarget,
+			        domEvent: ev
+				});
+			});
+			_self.get('el').delegate('.resetBtn','click',function(ev){
+				ev.preventDefault();
+				_self.get('el').get(0).reset();
+				_self.fire('formReset',{
 					param : _self.serializeToObject(),
 					domTarget: ev.domTarget,
 			        domEvent: ev
@@ -61,15 +70,19 @@ define('common/search/SearchForm',['bui/common','bui/layout','bui/form','common/
 		},
 		_geButton:function(){
 			var b = new Component.Controller({
-				content:'<button type="button" class="button button-primary">查询</button>'
-			            +'<button type="reset" class="button">重置</button>'
+				content:'<button type="button" class="button button-primary searchBtn">查询</button>&nbsp;&nbsp;'
+			            +'<button type="button" class="button resetBtn">重置</button>'
 			});
 			return b;
 		}
 	},{
 		ATTRS:{
 			items : {value : []},
-			events: {value: {'formSearch': true}}
+			events: {value: {
+					'formSearch': true,
+					'formReset' : true
+				}
+			}
 		}
 	});
 	return SearchForm;
