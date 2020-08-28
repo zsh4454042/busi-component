@@ -15,7 +15,7 @@ define('common/search/SearchForm',['bui/common','bui/layout','bui/form','common/
 			var lrc = new LRC({
 				id : 'lrc',
 				leftPlugin : [layout],
-				leftSize : 22,
+				leftSize : 21,
 				leftChildren : formItems,
 				rightChildren : [_self._geButton()]
 			});
